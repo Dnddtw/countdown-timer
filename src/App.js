@@ -1,29 +1,41 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { throws } from 'assert';
+import Timer from './components/Timer';
 
 class App extends React.Component {
 	state = {
-		time: 3600000
+		time: new Date(3600000)
 	};
 
+	_contdownTimerHandler = () => {
+		const { time } = this.state;
+
+		const ms = parseInt(time.getMilliseconds() / 10);
+		const s = time.getSeconds();
+		const m = time.getMinutes();
+		const h = time.getHours();
+
+		const milliseconds = ms < 10 ? `0${ms}` : ms;
+		const seconds      = s < 10 ? `0${s}`: s;
+		const minutes      = m < 10 ? `0${m}`: m;
+		const hours        = h < 10 ? `0${h}`: h;
+
+		this.setState({
+			time: new Date(time.getTime() - 11),
+			date: `${hours}:${minutes}:${seconds}:${milliseconds}`
+		});
+	}
+
 	componentDidMount() {
-		setInterval(() => {
-			const { time } = this.state;
-
-			const milliseconds = parseInt(time % 1000 / 10);
-			const seconds = parseInt(time / 1000 % 60);
-			const minutes = parseInt(time / 60000 % 60);
-
-			this.setState({
-				time: time - 11,
-				date: `${minutes} : ${seconds} : ${milliseconds}`
-			})
-		}, 11);
+		setInterval(this._contdownTimerHandler, 11);
 	}
 
 	render() {
-		return <div>{this.state.date}</div>
+		const { date } = this.state;
+		return (
+			<div>
+				<Timer date={date} />
+			</div>
+		);
 	}
 }
 
