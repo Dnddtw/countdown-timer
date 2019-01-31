@@ -1,39 +1,33 @@
-import React from 'react';
+import React, { Component } from 'react';
 import Timer from './components/Timer';
 
-class App extends React.Component {
+class App extends Component {
 	state = {
-		time: new Date(3600000)
+		TimerArray: []
 	};
 
-	_contdownTimerHandler = () => {
-		const { time } = this.state;
-
-		const ms = parseInt(time.getMilliseconds() / 10);
-		const s = time.getSeconds();
-		const m = time.getMinutes();
-		const h = time.getHours();
-
-		const milliseconds = ms < 10 ? `0${ms}` : ms;
-		const seconds      = s < 10 ? `0${s}`: s;
-		const minutes      = m < 10 ? `0${m}`: m;
-		const hours        = h < 10 ? `0${h}`: h;
-
+	_addNewTimer = () => {
+		let { TimerArray } = this.state;
+		TimerArray.push(1);
 		this.setState({
-			time: new Date(time.getTime() - 11),
-			date: `${hours}:${minutes}:${seconds}:${milliseconds}`
-		});
+			TimerArray: TimerArray
+		}, () => (console.log(this.state.TimerArray.length)));
 	}
 
+	_updateTimers = () => {
+
+	};
+
 	componentDidMount() {
-		setInterval(this._contdownTimerHandler, 11);
+		// setInterval(this._updateTimers, 11);
 	}
 
 	render() {
-		const { date } = this.state;
+		const { TimerArray } = this.state;
 		return (
 			<div>
-				<Timer date={date} />
+				<button onClick={this._addNewTimer}>Add a new timer</button>
+				{TimerArray.map((timer, index) => (<Timer key={index} updateTimers={this._updateTimers} />))}
 			</div>
 		);
 	}
