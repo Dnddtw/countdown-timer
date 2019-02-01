@@ -1,44 +1,36 @@
-import React, { PureComponent } from 'react';
+import React from 'react';
 
-export default class Timer extends PureComponent {
-	state = {};
+const _contdownTimerCalculator = (timeProp) => {
+	const time = new Date(timeProp);
 
-	_contdownTimerCalculator = (time) => {
-		const ms = parseInt(time.getMilliseconds() / 10);
-		const s = time.getSeconds();
-		const m = time.getMinutes();
-		const h = time.getHours();
+	const ms = parseInt(time.getMilliseconds() / 10);
+	const s = time.getSeconds();
+	const m = time.getMinutes();
+	const h = time.getHours();
 
-		const milliseconds = ms < 10 ? `0${ms}` : ms;
-		const seconds      = s < 10 ? `0${s}`: s;
-		const minutes      = m < 10 ? `0${m}`: m;
-		const hours        = h < 10 ? `0${h}`: h;
+	const milliseconds = ms < 10 ? `0${ms}` : ms;
+	const seconds      = s < 10 ? `0${s}`: s;
+	const minutes      = m < 10 ? `0${m}`: m;
+	const hours        = h < 10 ? `0${h}`: h;
 
-		return `${hours}:${minutes}:${seconds}:${milliseconds}`;
-	}
+	return `${hours}:${minutes}:${seconds}:${milliseconds}`;
+}
 
-	_updateTimers = () => {
-		const { time } = this.state;
-		this.setState({
-			time: new Date(time.getTime() - 11),
-			date: this._contdownTimerCalculator(time)
-		});
-	}	
+export default function Timer ({ time }) {
 
-	componentDidMount() {
-		const time = new Date(35000);
-		const date = this._contdownTimerCalculator(time);
+	const date = _contdownTimerCalculator(time);
 
-		this.setState({
-			time: new Date(time.getTime() - 11),
-			date
-		});
+	// componentDidMount() {
+	// 	const time = new Date(35000);
+	// 	const date = this._contdownTimerCalculator(time);
 
-		setInterval(this._updateTimers, 11);
-	}
+	// 	this.setState({
+	// 		time: new Date(time.getTime() - 11),
+	// 		date
+	// 	});
 
-	render() {
-		const { date } = this.state;
-		return <div> {date} </div>
-	}
+	// 	setInterval(this._updateTimers, 11);
+	// }
+
+	return <span> {date} </span>;
 };
