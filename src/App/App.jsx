@@ -28,6 +28,10 @@ class App extends Component {
     });
   }
 
+  removeTimers = () => {
+    this.setState({ TimerArray: [] });
+  }
+
   updateTimers = () => {
     const { TimerArray } = this.state;
 
@@ -47,12 +51,14 @@ class App extends Component {
 
     return (
       <div>
-        <Header count={timerCount} addNewTimer={this.addNewTimer} />
-
+        <Header
+          count={timerCount}
+          addNewTimer={this.addNewTimer}
+          removeTimers={this.removeTimers}
+        />
         {TimerArray.map((value, index) => {
           const time = index ? firstTime + value : value;
           const key = `Timer-${index}`;
-
           return (
             <div key={key}>
               <Timer time={time} />
