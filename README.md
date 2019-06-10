@@ -22,4 +22,4 @@ Countdown Timer
 
 ## Published
 
-https://dnddtw.github.io/countdown-timer/
+https://npmjke.github.io/countdown-timer/
